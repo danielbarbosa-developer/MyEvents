@@ -1,5 +1,6 @@
 package repository;
 
+import abstractions.IRepository;
 import android.icu.util.Calendar;
 import entities.EventModel;
 
@@ -8,8 +9,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.time.LocalDate;
+import java.util.List;
 
-public class EventsRepositoryInMemory {
+public class EventsRepositoryInMemory implements IRepository {
 
     private ArrayList<EventModel> eventsInMemory;
 
@@ -19,7 +21,7 @@ public class EventsRepositoryInMemory {
         eventsInMemory = new ArrayList<EventModel>();
     }
 
-    public ArrayList<EventModel> GetAllEvents(){
+    public List<EventModel> GetAllEvents(){
         return eventsInMemory;
     }
 

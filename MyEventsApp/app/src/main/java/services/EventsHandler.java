@@ -1,19 +1,23 @@
 package services;
 
+import abstractions.IRepository;
+import android.content.Context;
 import entities.EventModel;
 import repository.EventsRepositoryInMemory;
+import repository.EventsRepositorySQLite;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class EventsHandler {
 
-    private EventsRepositoryInMemory repository;
+    private IRepository repository;
 
-    public EventsHandler(){
-        this.repository = new EventsRepositoryInMemory();
+    public EventsHandler(Context context){
+        this.repository = new EventsRepositorySQLite(context);
     }
 
-    public ArrayList<EventModel> GetAllEvents(){
+    public List<EventModel> GetAllEvents(){
         return repository.GetAllEvents();
     }
 

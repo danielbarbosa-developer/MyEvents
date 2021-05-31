@@ -12,6 +12,7 @@ import entities.EventModel;
 import services.EventsHandler;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -24,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ListView eventsListView;
     private ArrayAdapter<EventModel> eventsAdapter;
-    private ArrayList<EventModel> eventsLoaded;
+    private List<EventModel> eventsLoaded;
     private EventsHandler eventsHandler;
 
     @Override
@@ -33,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setTitle("MyEvents app");
 
-        eventsHandler = new EventsHandler();
+        eventsHandler = new EventsHandler(getBaseContext());
         eventsLoaded = eventsHandler.GetAllEvents();
 
         this.eventsListView = findViewById(R.id.EventsListView);
