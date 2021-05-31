@@ -47,6 +47,11 @@ public class EventsRepositorySQLite implements IRepository {
 
     @Override
     public void EditEvent(int eventId, EventModel event) {
+        ContentValues values = new ContentValues();
+        values.put(EventTableModel.COLUMN_EVENT_NAME, event.getEventName());
+        values.put(EventTableModel.COLUMN_EVENT_DATE, event.getDate());
+        values.put(EventTableModel.COLUMN_EVENT_LOCATION, event.getLocation());
 
+        dbGateway.getDatabase().update(EventTableModel.TABLE_NAME, values, EventTableModel._ID + "=?", new String[] {String.valueOf(eventId)});
     }
 }
