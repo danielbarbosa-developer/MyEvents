@@ -54,4 +54,9 @@ public class EventsRepositorySQLite implements IRepository {
 
         dbGateway.getDatabase().update(EventTableModel.TABLE_NAME, values, EventTableModel._ID + "=?", new String[] {String.valueOf(eventId)});
     }
+
+    @Override
+    public void DeleteEvent(int eventId) {
+        dbGateway.getDatabase().delete(EventTableModel.TABLE_NAME, EventTableModel._ID + "=?", new String[] {String.valueOf(eventId)});
+    }
 }

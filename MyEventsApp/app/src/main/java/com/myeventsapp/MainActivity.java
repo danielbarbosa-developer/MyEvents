@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         eventsListView.setAdapter(eventsAdapter);
 
         onClickListenerListView();
+        onItemLongClickListenerListView();
     }
 
     public void onClickNewEvent(View v){
@@ -74,6 +75,20 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, RegisterEventActivity.class);
                 intent.putExtra("event edition", eventClicked);
                 startActivityForResult(intent, REQUEST_CODE_EDIT_EVENT);
+            }
+        });
+    }
+
+    private void onItemLongClickListenerListView(){
+        eventsListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                EventModel eventClicked = eventsAdapter.getItem(position);
+                eventsHandler.DeleteEvent(eventClicked.getId());
+                eventsLoaded = eventsHandler.GetAllEvents();
+                eventsAdapter = new ArrayAdapter<EventModel>(MainActivity.this, android.R.layout.simple_list_item_1, eventsLoaded);
+                eventsListView.setAdapter(eventsAdapter);
+                return true;
             }
         });
     }

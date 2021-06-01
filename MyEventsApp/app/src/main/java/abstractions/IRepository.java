@@ -12,4 +12,6 @@ public interface IRepository {
     void AddNewEvent(EventModel event);
 
     void EditEvent(int eventId, EventModel event);
+
+    void DeleteEvent(int eventId);
 }

@@ -28,4 +28,8 @@ public class EventsHandler {
     public void EditEvent(int eventId, EventModel event){
         repository.EditEvent(eventId, event);
     }
+
+    public void DeleteEvent(int eventId){
+        repository.DeleteEvent(eventId);
+    }
 }
