@@ -7,13 +7,13 @@ import java.util.Date;
 
 public class EventModel implements Serializable {
 
-    public EventModel(String name, String date, String location){
+    public EventModel(String name, String date, LocationModel location){
         this.EventName = name;
         this.Date = date;
         this.Location = location;
     }
 
-    public EventModel(int id, String eventName, String date, String location) {
+    public EventModel(int id, String eventName, String date, LocationModel location) {
         Id = id;
         EventName = eventName;
         Date = date;
@@ -27,7 +27,7 @@ public class EventModel implements Serializable {
 
     private String Date;
 
-    private String Location;
+    private LocationModel Location;
 
     public int getId() {
         return Id;
@@ -45,7 +45,7 @@ public class EventModel implements Serializable {
         return Date;
     }
 
-    public String getLocation(){
+    public LocationModel getLocation(){
         return Location;
     }
 
@@ -57,12 +57,12 @@ public class EventModel implements Serializable {
         this.Date = date;
     }
 
-    public void setLocation(String location){
+    public void setLocation(LocationModel location){
         this.Location = location;
     }
 
     @Override
     public String toString(){
-        return this.EventName + "\n" + this.Date.toString() + "\n" + this.Location;
+        return this.EventName + "\n" + this.Date.toString() + "\n" + this.Location.toString();
     }
 }

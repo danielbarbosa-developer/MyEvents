@@ -12,6 +12,6 @@ public class EventTableModel implements BaseColumns {
 
     public static final String COLUMN_EVENT_DATE = "Date";
 
-    public static final String COLUMN_EVENT_LOCATION = "Location";
+    public static final String COLUMN_LOCATION_ID = "Location_Id";
 
 }

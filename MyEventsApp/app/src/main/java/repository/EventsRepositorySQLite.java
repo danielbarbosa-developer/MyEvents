@@ -5,8 +5,10 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import entities.EventModel;
+import entities.LocationModel;
 import infrastructure.DatabaseGateway;
 import infrastructure.models.EventTableModel;
+import infrastructure.models.LocationTableModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,13 +24,20 @@ public class EventsRepositorySQLite implements IRepository {
     @Override
     public List<EventModel> GetAllEvents() {
         List<EventModel> list = new ArrayList<EventModel>();
-        Cursor cursor = dbGateway.getDatabase().rawQuery("SELECT * FROM " + EventTableModel.TABLE_NAME, null);
+        String sql = "SELECT * FROM " + EventTableModel.TABLE_NAME + " INNER JOIN " + LocationTableModel.TABLE_NAME +
+                " ON " + EventTableModel.COLUMN_LOCATION_ID + " = " + LocationTableModel._ID;
+        Cursor cursor = dbGateway.getDatabase().rawQuery(sql, null);
         while (cursor.moveToNext()){
             int id = cursor.getInt(cursor.getColumnIndex(EventTableModel._ID));
             String name = cursor.getString(cursor.getColumnIndex(EventTableModel.COLUMN_EVENT_NAME));
             String date = cursor.getString(cursor.getColumnIndex(EventTableModel.COLUMN_EVENT_DATE));
-            String location = cursor.getString(cursor.getColumnIndex(EventTableModel.COLUMN_EVENT_LOCATION));
+            int locationId = cursor.getInt(cursor.getColumnIndex(EventTableModel.COLUMN_LOCATION_ID));
+            String localName = cursor.getString(cursor.getColumnIndex(LocationTableModel.COLUMN_LOCATION_NAME));
+            String district = cursor.getString(cursor.getColumnIndex(LocationTableModel.COLUMN_LOCATION_DISTRICT));
+            String city = cursor.getString(cursor.getColumnIndex(LocationTableModel.COLUMN_LOCATION_CITY));
+            int capacity = cursor.getInt(cursor.getColumnIndex(LocationTableModel.COLUMN_LOCATION_CAPACITY));
 
+            LocationModel location = new LocationModel(locationId, localName, district, city, capacity);
             list.add(new EventModel(id, name, date, location));
         }
         cursor.close();
@@ -40,7 +49,7 @@ public class EventsRepositorySQLite implements IRepository {
         ContentValues values = new ContentValues();
         values.put(EventTableModel.COLUMN_EVENT_NAME, event.getEventName());
         values.put(EventTableModel.COLUMN_EVENT_DATE, event.getDate());
-        values.put(EventTableModel.COLUMN_EVENT_LOCATION, event.getLocation());
+        values.put(EventTableModel.COLUMN_LOCATION_ID, event.getLocation().getId());
 
         dbGateway.getDatabase().insert(EventTableModel.TABLE_NAME, null, values);
     }
@@ -50,7 +59,7 @@ public class EventsRepositorySQLite implements IRepository {
         ContentValues values = new ContentValues();
         values.put(EventTableModel.COLUMN_EVENT_NAME, event.getEventName());
         values.put(EventTableModel.COLUMN_EVENT_DATE, event.getDate());
-        values.put(EventTableModel.COLUMN_EVENT_LOCATION, event.getLocation());
+        values.put(EventTableModel.COLUMN_LOCATION_ID, event.getLocation().getId());
 
         dbGateway.getDatabase().update(EventTableModel.TABLE_NAME, values, EventTableModel._ID + "=?", new String[] {String.valueOf(eventId)});
     }
